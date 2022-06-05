@@ -1,0 +1,37 @@
+services:
+  meshcentral:
+    image: meshcentral
+    environment:
+      DOMAIN_NAME: example.com
+      SERVER_NAME: remote
+      TITLE: My Domain
+      SUB_TITLE: MeshCentral
+      WAN_ONLY: true
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+      - target: 4433
+        published: 4433
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: mesh-backup
+        target: /app/meshcentral/meshcentral-backup
+      - type: volume
+        source: mesh-data
+        target: /app/meshcentral/meshcentral-data
+      - type: volume
+        source: mesh-files
+        target: /app/meshcentral/meshcentral-files
+
+volumes:
+  mesh-data:
+  mesh-files:
+  mesh-backup:
